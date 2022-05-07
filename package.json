@@ -3,5 +3,9 @@
   "version": "0.0.1",
   "description": "A simple NestJs Mailer module based on NodeMailer.",
   "license": "GPL-3.0-or-later",
-  "author": "Enrico Emiro"
+  "author": "Enrico Emiro",
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.4",
+    "@commitlint/config-conventional": "^16.2.4"
+  }
 }
