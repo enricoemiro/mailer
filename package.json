@@ -4,8 +4,12 @@
   "description": "A simple NestJs Mailer module based on NodeMailer.",
   "license": "GPL-3.0-or-later",
   "author": "Enrico Emiro",
+  "scripts": {
+    "postinstall": "husky install"
+  },
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
-    "@commitlint/config-conventional": "^16.2.4"
+    "@commitlint/config-conventional": "^16.2.4",
+    "husky": "^7.0.4"
   }
 }
