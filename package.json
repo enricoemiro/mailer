@@ -6,9 +6,9 @@
   "author": "Enrico Emiro",
   "scripts": {
     "postinstall": "husky install",
-    "build": "nest build mailer",
-    "format": "prettier --write --no-error-on-unmatched-pattern \"libs/**/*.ts\"",
-    "lint": "eslint \"libs/**/*.ts\" --fix",
+    "build": "rimraf ./dist && tsc -p ./tsconfig.build.json",
+    "format": "prettier --write --no-error-on-unmatched-pattern \"lib/**/*.ts\"",
+    "lint": "eslint \"lib/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -54,7 +54,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "libs",
+    "rootDir": "lib",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
