@@ -4,6 +4,8 @@
   "description": "A simple NestJs Mailer module based on NodeMailer.",
   "license": "GPL-3.0-or-later",
   "author": "Enrico Emiro",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "postinstall": "husky install",
     "build": "rimraf ./dist && tsc -p ./tsconfig.build.json",
