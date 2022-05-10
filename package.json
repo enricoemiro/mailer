@@ -1,13 +1,19 @@
 {
   "name": "@enricoemiro/mailer",
   "version": "0.0.1",
-  "description": "A simple NestJs Mailer module based on NodeMailer.",
+  "description": "A simple NestJS mailer module based on NodeMailer.",
   "license": "GPL-3.0-or-later",
   "author": "Enrico Emiro",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist/**/*"
+  ],
+  "keywords": [
+    "nest",
+    "nodemailer",
+    "mailer",
+    "nodejs"
   ],
   "scripts": {
     "postinstall": "husky install",
