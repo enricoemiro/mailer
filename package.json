@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple NestJS mailer module based on NodeMailer.",
   "license": "MIT",
+  "private": false,
   "author": "Enrico Emiro",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -69,5 +70,13 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enricoemiro/mailer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/enricoemiro/mailer/issues"
+  },
+  "homepage": "https://github.com/enricoemiro/mailer#README"
 }
