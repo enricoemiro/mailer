@@ -3,6 +3,7 @@ import * as SendmailTransport from 'nodemailer/lib/sendmail-transport';
 import * as SESTransport from 'nodemailer/lib/ses-transport';
 import * as SMTPTransport from 'nodemailer/lib/smtp-transport';
 import * as StreamTransport from 'nodemailer/lib/stream-transport';
+import { ModuleMetadata } from '@nestjs/common';
 import { Transporter } from 'nodemailer';
 
 export type MailerTransportType =
@@ -54,4 +55,13 @@ export interface MailerModuleOptions {
    * When "true", makes the module global-scoped.
    */
   global?: boolean;
+}
+
+export interface MailerModuleAsyncOptions
+  extends Pick<ModuleMetadata, 'imports'>,
+    Pick<MailerModuleOptions, 'global'> {
+  inject?: any[];
+  useFactory?: (
+    ...args: any[]
+  ) => Promise<MailerTransport[]> | MailerTransport[];
 }
