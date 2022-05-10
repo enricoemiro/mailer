@@ -2,7 +2,7 @@
   "name": "@enricoemiro/mailer",
   "version": "1.0.0",
   "description": "A simple NestJS mailer module based on NodeMailer.",
-  "license": "GPL-3.0-or-later",
+  "license": "MIT",
   "author": "Enrico Emiro",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
