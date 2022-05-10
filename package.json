@@ -17,7 +17,7 @@
     "nodejs"
   ],
   "scripts": {
-    "postinstall": "husky install",
+    "prepare": "husky install",
     "build": "rimraf ./dist && tsc -p ./tsconfig.build.json",
     "format": "prettier --write --no-error-on-unmatched-pattern \"lib/**/*.ts\"",
     "lint": "eslint \"lib/**/*.ts\" --fix",
@@ -78,5 +78,5 @@
   "bugs": {
     "url": "https://github.com/enricoemiro/mailer/issues"
   },
-  "homepage": "https://github.com/enricoemiro/mailer#README"
+  "homepage": "https://github.com/enricoemiro/mailer#readme"
 }
