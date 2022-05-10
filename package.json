@@ -6,6 +6,9 @@
   "author": "Enrico Emiro",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "postinstall": "husky install",
     "build": "rimraf ./dist && tsc -p ./tsconfig.build.json",
