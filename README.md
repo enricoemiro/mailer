@@ -8,6 +8,20 @@ This is a simple NestJS mailer module based on NodeMailer.
   </a>
 </p>
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/@enricoemiro/mailer">
+    <img src="https://img.shields.io/npm/v/@enricoemiro/mailer.svg" alt="NPM Version" />
+  </a>
+
+  <a href="https://www.npmjs.com/org/enricoemiro">
+    <img src="https://img.shields.io/npm/l/@enricoemiro/mailer.svg" alt="Package License" />
+  </a>
+
+  <a href="https://www.npmjs.com/org/enricoemiro">
+    <img src="https://img.shields.io/npm/dm/@enricoemiro/mailer" alt="NPM Downloads" />
+  </a>
+</p>
+
 <details>
   <summary>
     <strong>Table of content</strong> (click to expand)
@@ -38,10 +52,10 @@ A basic usage example:
 
 This could be done (a)synchronously using the methods: `forRoot()` and `forRootAsync()`.
 
+`./app.service.ts`
+
 ```ts
 import { MailerModule } from '@enricoemiro/mailer';
-
-`./app.service.ts`;
 
 @Module({
   imports: [

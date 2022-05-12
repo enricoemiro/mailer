@@ -33,7 +33,7 @@ export class MailerModule {
     return {
       module: MailerModule,
       providers: [this.createAsyncFactoryProvider(options), MailerService],
-      imports: options.imports,
+      imports: options.imports || [],
       exports: [MailerService],
       global: options.global || false,
     };
