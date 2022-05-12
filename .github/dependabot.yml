@@ -1,0 +1,15 @@
+---
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '12:00'
+      timezone: 'Europe/Rome'
+    target-branch: 'develop'
+    commit-message:
+      prefix: 'build(deps):'
+    labels:
+      - 'dependabot'
+    open-pull-requests-limit: 10
