@@ -6,7 +6,10 @@ import * as StreamTransport from 'nodemailer/lib/stream-transport';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { MAILER_OPTIONS } from './mailer.constants';
-import { MailerModuleOptions } from './mailer.interface';
+import {
+  MailerModuleAsyncOptions,
+  MailerModuleOptions,
+} from './mailer.interface';
 import { MailerService } from './mailer.service';
 
 import MailMessage = require('nodemailer/lib/mailer/mail-message');
@@ -20,6 +23,21 @@ async function createMailerService(
     providers: [
       MailerService,
       { provide: MAILER_OPTIONS, useValue: options.transports },
+    ],
+  }).compile();
+
+  const service = module.get<MailerService>(MailerService);
+  return service;
+}
+
+async function createAsyncMailerService(options: MailerModuleAsyncOptions) {
+  const module: TestingModule = await Test.createTestingModule({
+    providers: [
+      MailerService,
+      {
+        provide: MAILER_OPTIONS,
+        useFactory: options.useFactory,
+      },
     ],
   }).compile();
 
@@ -228,5 +246,43 @@ describe('MailerService', () => {
 
     expect(send).toHaveBeenCalled();
     expect(lastMail.data.from).toBe('"Ghost Foo 👻" <foo@example.com>');
+  });
+
+  it('should throw error if custom factory is not provided', async () => {
+    await expect(createAsyncMailerService({})).rejects.toThrow(Error);
+  });
+
+  it('should be defined with custom factory', async () => {
+    const service = await createAsyncMailerService({
+      useFactory: () => [
+        {
+          name: 'smtp',
+          transport: SMTP_CONNECTION,
+        },
+      ],
+    });
+
+    expect(service).toBeDefined();
+    expect(service.getTransporter('smtp').transporter).toBeInstanceOf(
+      SMTPTransport,
+    );
+  });
+
+  it('should be defined with custom async factory', async () => {
+    const service = await createAsyncMailerService({
+      useFactory: async () => {
+        return [
+          {
+            name: 'smtp',
+            transport: SMTP_CONNECTION,
+          },
+        ];
+      },
+    });
+
+    expect(service).toBeDefined();
+    expect(service.getTransporter('smtp').transporter).toBeInstanceOf(
+      SMTPTransport,
+    );
   });
 });
