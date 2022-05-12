@@ -7,6 +7,7 @@ updates:
       interval: 'daily'
       time: '12:00'
       timezone: 'Europe/Rome'
+    target-branch: 'develop'
     commit-message:
       prefix: 'build(deps):'
     labels:
