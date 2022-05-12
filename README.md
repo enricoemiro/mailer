@@ -38,10 +38,10 @@ A basic usage example:
 
 This could be done (a)synchronously using the methods: `forRoot()` and `forRootAsync()`.
 
+`./app.service.ts`;
+
 ```ts
 import { MailerModule } from '@enricoemiro/mailer';
-
-`./app.service.ts`;
 
 @Module({
   imports: [
