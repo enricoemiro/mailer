@@ -9,14 +9,9 @@ import { MailerTransport, MailerTransporter } from './mailer.interface';
 export class MailerService {
   private transporters = new Map<string, MailerTransporter>();
 
-  constructor(@Inject(MAILER_OPTIONS) mailerTransports: MailerTransport[]) {
-    if (mailerTransports.length === 0) {
-      throw new Error(
-        `Make sure to provide a nodemailer transport configuration object,
-         connection url or a transport plugin instance.`,
-      );
-    }
-
+  public constructor(
+    @Inject(MAILER_OPTIONS) mailerTransports: MailerTransport[],
+  ) {
     this.initTransporters(mailerTransports);
   }
 
@@ -69,6 +64,13 @@ export class MailerService {
   }
 
   private initTransporters(mailerTransports: MailerTransport[]) {
+    if (mailerTransports.length === 0) {
+      throw new Error(
+        `Make sure to provide a nodemailer transport configuration object,
+         connection url or a transport plugin instance.`,
+      );
+    }
+
     mailerTransports.forEach((mailerTransport: MailerTransport) => {
       this.addTransporter(mailerTransport);
     });

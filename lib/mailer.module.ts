@@ -2,6 +2,7 @@ import {
   DynamicModule,
   FactoryProvider,
   Module,
+  Provider,
   ValueProvider,
 } from '@nestjs/common';
 
@@ -15,7 +16,7 @@ import { MailerService } from './mailer.service';
 
 @Module({})
 export class MailerModule {
-  static forRoot(options: MailerModuleOptions): DynamicModule {
+  public static forRoot(options: MailerModuleOptions): DynamicModule {
     const MailerOptionsProvider: ValueProvider<MailerTransport[]> = {
       provide: MAILER_OPTIONS,
       useValue: options.transports,
@@ -29,21 +30,27 @@ export class MailerModule {
     };
   }
 
-  static forRootAsync(options: MailerModuleAsyncOptions): DynamicModule {
+  public static forRootAsync(options: MailerModuleAsyncOptions): DynamicModule {
+    const MailerAsyncProviders: Provider[] = this.createAsyncProviders(options);
+
     return {
       module: MailerModule,
-      providers: [this.createAsyncFactoryProvider(options), MailerService],
+      providers: [...MailerAsyncProviders, MailerService],
       imports: options.imports || [],
       exports: [MailerService],
       global: options.global || false,
     };
   }
 
+  private static createAsyncProviders(options: MailerModuleAsyncOptions) {
+    if (options.useFactory) {
+      return [this.createAsyncFactoryProvider(options)];
+    }
+  }
+
   private static createAsyncFactoryProvider(
     options: MailerModuleAsyncOptions,
   ): FactoryProvider {
-    if (options.useFactory === null) return;
-
     return {
       provide: MAILER_OPTIONS,
       useFactory: options.useFactory,
