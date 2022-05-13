@@ -20,6 +20,10 @@ This is a simple NestJS mailer module based on NodeMailer.
   <a href="https://www.npmjs.com/package/@enricoemiro/mailer">
     <img src="https://img.shields.io/npm/dm/@enricoemiro/mailer" alt="NPM Downloads" />
   </a>
+
+  <a href="https://www.npmjs.com/package/@enricoemiro/mailer">
+    <img src="https://github.com/enricoemiro/mailer/actions/workflows/test.yml/badge.svg" alt="Test CI" />
+  </a>
 </p>
 
 <details>
