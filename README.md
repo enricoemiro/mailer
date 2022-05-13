@@ -13,12 +13,16 @@ This is a simple NestJS mailer module based on NodeMailer.
     <img src="https://img.shields.io/npm/v/@enricoemiro/mailer.svg" alt="NPM Version" />
   </a>
 
-  <a href="https://www.npmjs.com/org/enricoemiro">
+  <a href="https://www.npmjs.com/package/@enricoemiro/mailer">
     <img src="https://img.shields.io/npm/l/@enricoemiro/mailer.svg" alt="Package License" />
   </a>
 
-  <a href="https://www.npmjs.com/org/enricoemiro">
+  <a href="https://www.npmjs.com/package/@enricoemiro/mailer">
     <img src="https://img.shields.io/npm/dm/@enricoemiro/mailer" alt="NPM Downloads" />
+  </a>
+
+  <a href="https://www.npmjs.com/package/@enricoemiro/mailer">
+    <img src="https://github.com/enricoemiro/mailer/actions/workflows/test.yml/badge.svg" alt="Test CI" />
   </a>
 </p>
 
