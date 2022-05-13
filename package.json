@@ -12,6 +12,8 @@
   ],
   "keywords": [
     "nest",
+    "nestjs",
+    "nestjs mailer",
     "nodemailer",
     "mailer",
     "nodejs"
