@@ -23,7 +23,8 @@
     "lint": "eslint \"lib/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "ci": "yarn install --frozen-lockfile --ignore-scripts"
   },
   "dependencies": {
     "nodemailer": "^6.7.5"
