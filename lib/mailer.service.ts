@@ -9,7 +9,9 @@ import { MailerTransport, MailerTransporter } from './mailer.interface';
 export class MailerService {
   private transporters = new Map<string, MailerTransporter>();
 
-  constructor(@Inject(MAILER_OPTIONS) mailerTransports: MailerTransport[]) {
+  public constructor(
+    @Inject(MAILER_OPTIONS) mailerTransports: MailerTransport[],
+  ) {
     this.initTransporters(mailerTransports);
   }
 
