@@ -27,11 +27,18 @@ This is a simple [NestJS](https://nestjs.com/) mailer module based on [NodeMaile
 </p>
 
 ## Table of Contents
+- [Why should you install this package?](#why-should-you-install-this-package)
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Methods](#api-methods)
 - [Changelog](#changelog)
 - [License](#license)
+
+## Why should you install this package?
+
+This package is meant to be a wrapper of NodeMailer (nothing less, nothing more). If your goal is to be able to use NodeMailer within NestJS then this package is for you.
+
+**IMPORTANT**: This package will never add native support for template engines (such as pug, handlebars, etc...).
 
 ## Installation
 
