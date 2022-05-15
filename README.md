@@ -26,17 +26,12 @@ This is a simple NestJS mailer module based on NodeMailer.
   </a>
 </p>
 
-<details>
-  <summary>
-    <strong>Table of content</strong> (click to expand)
-  </summary>
-
+## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Methods](#api-methods)
 - [Changelog](#changelog)
 - [License](#license)
-</details>
 
 ## Installation
 
