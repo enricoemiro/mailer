@@ -33,6 +33,7 @@ This is a simple NestJS mailer module based on NodeMailer.
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Changelog](#changelog)
 - [License](#license)
 </details>
 
@@ -128,6 +129,10 @@ export class AuthService {
   }
 }
 ```
+
+## Changelog
+
+All changelog are available [here](https://github.com/enricoemiro/mailer/releases).
 
 ## License
 
