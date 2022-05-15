@@ -1,6 +1,6 @@
 # Mailer
 
-This is a simple NestJS mailer module based on NodeMailer.
+This is a simple [NestJS](https://nestjs.com/) mailer module based on [NodeMailer](npmjs.com/package/nodemailer).
 
 <p align="center">
   <a href="http://nestjs.com/">
@@ -26,15 +26,20 @@ This is a simple NestJS mailer module based on NodeMailer.
   </a>
 </p>
 
-<details>
-  <summary>
-    <strong>Table of content</strong> (click to expand)
-  </summary>
+## Table of Contents
 
+- [Why should you install this package?](#why-should-you-install-this-package)
 - [Installation](#installation)
 - [Usage](#usage)
+- [API Methods](#api-methods)
+- [Changelog](#changelog)
 - [License](#license)
-</details>
+
+## Why should you install this package?
+
+This package is meant to be a wrapper of NodeMailer (nothing less, nothing more). If your goal is to be able to use NodeMailer within NestJS then this package is for you.
+
+**IMPORTANT**: This package will never add native support for template engines (such as pug, handlebars, etc...).
 
 ## Installation
 
@@ -52,72 +57,91 @@ yarn add -D @types/nodemailer
 
 A basic usage example:
 
-1. Register the module as a dependency:
+1. Register the module as a dependency (`app.service.ts`)
 
-This could be done (a)synchronously using the methods: `forRoot()` and `forRootAsync()`.
-
-`./app.service.ts`
+Using `forRoot()`
 
 ```ts
 import { MailerModule } from '@enricoemiro/mailer';
 
-@Module({
-  imports: [
-    MailerModule.forRoot({
-      transports: [
-        {
-          name: 'mailtrap',
-          transport: {
-            host: 'smtp.mailtrap.io',
-            port: 2525,
-            auth: {
-              user: 'your-user',
-              pass: 'pass',
-            },
-          },
-        },
-      ],
-      global: true,
-    }),
-
-    // OR
-
-    // DISCLAIMER: ConfigService and ConfigModule are assumed to exist
-    MailerModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => [
-        {
-          name: 'mailtrap',
-          transport: {
-            host: configService.get<string>('MAIL_HOST'),
-            port: configService.get<number>('MAIL_PORT'),
-            auth: {
-              user: configService.get<string>('MAIL_USER'),
-              pass: configService.get<string>('MAIL_PASS'),
-            },
-          },
-        },
-      ],
-      inject: [ConfigService],
-      global: true,
-    }),
+MailerModule.forRoot({
+  transports: [
+    {
+      name: 'mailtrap',
+      transport: {
+        host: 'smtp.mailtrap.io',
+        // ... transport settings
+      },
+    },
   ],
-})
-export class AppModule {}
+  global: true,
+});
+```
+
+Using `forRootAsync()`
+
+- Using `useFactory`
+
+```ts
+import { MailerModule } from '@enricoemiro/mailer';
+
+MailerModule.forRootAsync({
+  imports: [ConfigModule],
+  useFactory: async function (configService: ConfigService) {
+    return [
+      {
+        name: 'mailtrap',
+        transport: {
+          host: configService.get<string>('MAIL_HOST'),
+          // ... transport settings
+        },
+      },
+    ];
+  },
+  inject: [ConfigService],
+  global: true,
+});
+```
+
+- Using `useClass` or `useExisting`
+
+```ts
+@Injectable()
+export class MailerConfigService implements MailerTransportFactory {
+  createMailerTransports(): Promise<MailerTransport[]> | MailerTransport[] {
+    return [
+      {
+        name: 'smtp',
+        transport: {
+          // ... transport settings
+        },
+      },
+    ];
+  }
+}
+```
+
+```ts
+import { MailerModule } from '@enricoemiro/mailer';
+
+import { MailerConfigService } from './mailerConfigServicePath.ts';
+
+MailerModule.forRootAsync({
+  useClass: MailerConfigService,
+  global: true,
+});
 ```
 
 2. Inject the `MailerService` as a dependency:
-
-`./yourServiceName.service.ts`
 
 ```ts
 import { MailerService } from '@enricoemiro/mailer';
 
 @Injectable()
-export class AuthService {
+export class YourService {
   constructor(private mailerService: MailerService) {}
 
-  async sendUserRegistrationEmail() {
+  async sendHelloWorldEmail() {
     this.mailerService.sendAsyncMail('mailtrap', {
       from: '"Ghost Foo 👻" <foo@example.com>',
       to: 'bar@example.com, baz@example.com',
@@ -128,6 +152,22 @@ export class AuthService {
   }
 }
 ```
+
+## API Methods
+
+The `MailerModule` can be instantied synchronously or asynchronously using respectively:
+
+- `forRoot(options: MailerModuleOptions)`
+- `forRootAsync(options: MailerModuleAsyncOptions)`
+
+The `MailerService` exposes the following two methods:
+
+- `sendAsyncEmail(name: string, mailOptions: Mail.Options): Promise<SentMessageInfo>`
+- `getTransporter(name: string): Transporter`
+
+## Changelog
+
+All changelog are available [here](https://github.com/enricoemiro/mailer/releases).
 
 ## License
 
