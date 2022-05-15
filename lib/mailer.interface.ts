@@ -63,7 +63,7 @@ export interface MailerModuleOptions {
 }
 
 export interface MailerTransportFactory {
-  createMailerTransports(): Promise<MailerTransport> | MailerTransport[];
+  createMailerTransports(): Promise<MailerTransport[]> | MailerTransport[];
 }
 
 export interface MailerModuleAsyncOptions
