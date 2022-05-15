@@ -33,6 +33,7 @@ This is a simple NestJS mailer module based on NodeMailer.
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [API Methods](#api-methods)
 - [Changelog](#changelog)
 - [License](#license)
 </details>
@@ -129,6 +130,16 @@ export class AuthService {
   }
 }
 ```
+
+## API Methods
+
+The `MailerModule` can be instantied synchronously or asynchronously using respectively:
+- `forRoot(options: MailerModuleOptions)`
+- `forRootAsync(options: MailerModuleAsyncOptions)`
+
+The `MailerService` exposes the following two methods:
+- `sendAsyncEmail(name: string, mailOptions: Mail.Options): Promise<SentMessageInfo>`
+- `getTransporter(name: string): Transporter`
 
 ## Changelog
 
