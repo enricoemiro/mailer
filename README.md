@@ -1,6 +1,6 @@
 # Mailer
 
-This is a simple NestJS mailer module based on NodeMailer.
+This is a simple [NestJS](https://nestjs.com/) mailer module based on [NodeMailer](npmjs.com/package/nodemailer).
 
 <p align="center">
   <a href="http://nestjs.com/">
