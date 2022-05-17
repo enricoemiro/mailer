@@ -58,14 +58,16 @@ export interface MailerModuleOptions {
 }
 
 export interface MailerTransportFactory {
-  createMailerTransports(): Promise<MailerTransport[]> | MailerTransport[];
+  createMailerModuleOptions():
+    | Promise<MailerModuleOptions>
+    | MailerModuleOptions;
 }
 
 export interface MailerModuleAsyncOptions
   extends Pick<ModuleMetadata, 'imports'> {
   inject?: any[];
   useFactory?: FactoryProvider<
-    Promise<MailerTransport[]> | MailerTransport[]
+    Promise<MailerModuleOptions> | MailerModuleOptions
   >['useFactory'];
   useExisting?: ExistingProvider<MailerTransportFactory>['useExisting'];
   useClass?: ClassProvider<MailerTransportFactory>['useClass'];
