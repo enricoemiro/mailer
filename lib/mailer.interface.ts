@@ -55,11 +55,6 @@ export interface MailerModuleOptions {
    * Array of Mailer Transport object.
    */
   transports: MailerTransport[];
-
-  /**
-   * When "true", makes the module global-scoped.
-   */
-  global?: boolean;
 }
 
 export interface MailerTransportFactory {
@@ -67,8 +62,7 @@ export interface MailerTransportFactory {
 }
 
 export interface MailerModuleAsyncOptions
-  extends Pick<ModuleMetadata, 'imports'>,
-    Pick<MailerModuleOptions, 'global'> {
+  extends Pick<ModuleMetadata, 'imports'> {
   inject?: any[];
   useFactory?: FactoryProvider<
     Promise<MailerTransport[]> | MailerTransport[]
