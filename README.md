@@ -57,7 +57,7 @@ yarn add -D @types/nodemailer
 
 A basic usage example:
 
-1. Register the module as a dependency (`app.service.ts`)
+1. Register the module as a dependency (`app.module.ts`)
 
 Using `forRoot()`
 
