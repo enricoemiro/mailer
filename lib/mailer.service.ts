@@ -3,16 +3,20 @@ import { SentMessageInfo, Transporter, createTransport } from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
 import { MAILER_OPTIONS } from './mailer.constants';
-import { MailerTransport, MailerTransporter } from './mailer.interface';
+import {
+  MailerModuleOptions,
+  MailerTransport,
+  MailerTransporter,
+} from './mailer.interface';
 
 @Injectable()
 export class MailerService {
   private transporters = new Map<string, MailerTransporter>();
 
   public constructor(
-    @Inject(MAILER_OPTIONS) mailerTransports: MailerTransport[],
+    @Inject(MAILER_OPTIONS) mailerModuleOptions: MailerModuleOptions,
   ) {
-    this.initTransporters(mailerTransports);
+    this.initTransporters(mailerModuleOptions.transports);
   }
 
   /**
