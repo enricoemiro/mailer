@@ -1,6 +1,6 @@
 {
   "name": "@enricoemiro/mailer",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "A simple NestJS mailer module based on NodeMailer.",
   "license": "MIT",
   "private": false,
