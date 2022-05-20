@@ -20,10 +20,7 @@ async function createMailerService(
   options: MailerModuleOptions,
 ): Promise<MailerService> {
   const module: TestingModule = await Test.createTestingModule({
-    providers: [
-      MailerService,
-      { provide: MAILER_OPTIONS, useValue: options.transports },
-    ],
+    providers: [MailerService, { provide: MAILER_OPTIONS, useValue: options }],
   }).compile();
 
   const service = module.get<MailerService>(MailerService);
@@ -254,12 +251,16 @@ describe('MailerService', () => {
 
   it('should be defined with custom factory', async () => {
     const service = await createAsyncMailerService({
-      useFactory: () => [
-        {
-          name: 'smtp',
-          transport: SMTP_CONNECTION,
-        },
-      ],
+      useFactory: () => {
+        return {
+          transports: [
+            {
+              name: 'smtp',
+              transport: SMTP_CONNECTION,
+            },
+          ],
+        };
+      },
     });
 
     expect(service).toBeDefined();
@@ -271,12 +272,14 @@ describe('MailerService', () => {
   it('should be defined with custom async factory', async () => {
     const service = await createAsyncMailerService({
       useFactory: async () => {
-        return [
-          {
-            name: 'smtp',
-            transport: SMTP_CONNECTION,
-          },
-        ];
+        return {
+          transports: [
+            {
+              name: 'smtp',
+              transport: SMTP_CONNECTION,
+            },
+          ],
+        };
       },
     });
 

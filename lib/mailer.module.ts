@@ -11,28 +11,31 @@ import { MAILER_OPTIONS } from './mailer.constants';
 import {
   MailerModuleAsyncOptions,
   MailerModuleOptions,
-  MailerTransport,
   MailerTransportFactory,
 } from './mailer.interface';
 import { MailerService } from './mailer.service';
 
 @Module({})
 export class MailerModule {
-  public static forRoot(options: MailerModuleOptions): DynamicModule {
-    const MailerOptionsProvider: ValueProvider<MailerTransport[]> = {
+  public static forRoot(
+    options: MailerModuleOptions & { isGlobal?: boolean },
+  ): DynamicModule {
+    const MailerOptionsProvider: ValueProvider<MailerModuleOptions> = {
       provide: MAILER_OPTIONS,
-      useValue: options.transports,
+      useValue: options,
     };
 
     return {
       module: MailerModule,
       providers: [MailerOptionsProvider, MailerService],
       exports: [MailerService],
-      global: options.global || false,
+      global: options.isGlobal || false,
     };
   }
 
-  public static forRootAsync(options: MailerModuleAsyncOptions): DynamicModule {
+  public static forRootAsync(
+    options: MailerModuleAsyncOptions & { isGlobal: boolean },
+  ): DynamicModule {
     const MailerAsyncProviders: Provider[] = this.createAsyncProviders(options);
 
     return {
@@ -40,7 +43,7 @@ export class MailerModule {
       providers: [...MailerAsyncProviders, MailerService],
       imports: options.imports || [],
       exports: [MailerService],
-      global: options.global || false,
+      global: options.isGlobal || false,
     };
   }
 
@@ -76,7 +79,7 @@ export class MailerModule {
   ): FactoryProvider {
     return {
       provide: MAILER_OPTIONS,
-      useFactory: (f: MailerTransportFactory) => f.createMailerTransports(),
+      useFactory: (f: MailerTransportFactory) => f.createMailerModuleOptions(),
       inject: [options.useClass || options.useExisting],
     };
   }
