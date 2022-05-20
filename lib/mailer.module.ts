@@ -34,7 +34,7 @@ export class MailerModule {
   }
 
   public static forRootAsync(
-    options: MailerModuleAsyncOptions & { isGlobal: boolean },
+    options: MailerModuleAsyncOptions & { isGlobal?: boolean },
   ): DynamicModule {
     const MailerAsyncProviders: Provider[] = this.createAsyncProviders(options);
 
