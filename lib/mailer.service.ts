@@ -26,7 +26,7 @@ export class MailerService {
     name: string,
     mailOptions: Mail.Options,
   ): Promise<SentMessageInfo> {
-    return await this.getTransporter(name).sendMail(mailOptions);
+    return this.getTransporter(name).sendMail(mailOptions);
   }
 
   /**
