@@ -7,9 +7,6 @@
   "author": "Enrico Emiro",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
   "keywords": [
     "nest",
     "nestjs",
