@@ -1,0 +1,14 @@
+# Files
+.eslintrc.js
+.gitignore
+.prettierrc
+commitlint.config.js
+tsconfig.build.json
+tsconfig.json
+jest.config.ts
+
+# Folders
+/.github
+/.husky
+/coverage
+/lib
