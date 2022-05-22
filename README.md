@@ -74,7 +74,7 @@ MailerModule.forRoot({
       },
     },
   ],
-  global: true,
+  isGlobal: true,
 });
 ```
 
@@ -88,18 +88,20 @@ import { MailerModule } from '@enricoemiro/mailer';
 MailerModule.forRootAsync({
   imports: [ConfigModule],
   useFactory: async function (configService: ConfigService) {
-    return [
-      {
-        name: 'mailtrap',
-        transport: {
-          host: configService.get<string>('MAIL_HOST'),
-          // ... transport settings
+    return {
+      transports: [
+        {
+          name: 'mailtrap',
+          transport: {
+            host: configService.get<string>('MAIL_HOST'),
+            // ... transport settings
+          },
         },
-      },
-    ];
+      ];
+    };
   },
   inject: [ConfigService],
-  global: true,
+  isGlobal: true,
 });
 ```
 
@@ -108,15 +110,17 @@ MailerModule.forRootAsync({
 ```ts
 @Injectable()
 export class MailerConfigService implements MailerTransportFactory {
-  createMailerTransports(): Promise<MailerTransport[]> | MailerTransport[] {
-    return [
-      {
-        name: 'smtp',
-        transport: {
-          // ... transport settings
+  createMailerModuleOptions(): Promise<MailerModuleOptions> | MailerModuleOptions {
+    return {
+      transports: [
+        {
+          name: 'smtp',
+          transport: {
+            // ... transport settings
+          },
         },
-      },
-    ];
+      ];
+    };
   }
 }
 ```
@@ -128,7 +132,7 @@ import { MailerConfigService } from './mailerConfigServicePath.ts';
 
 MailerModule.forRootAsync({
   useClass: MailerConfigService,
-  global: true,
+  isGlobal: true,
 });
 ```
 
