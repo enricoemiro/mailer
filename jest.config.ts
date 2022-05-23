@@ -3,13 +3,19 @@ import type { Config } from '@jest/types';
 export default async (): Promise<Config.InitialOptions> => {
   return {
     moduleFileExtensions: ['js', 'json', 'ts'],
-    rootDir: 'lib',
+    rootDir: '.',
     testRegex: '.*\\.spec\\.ts$',
     transform: {
       '^.+\\.(t|j)s$': 'ts-jest',
     },
-    collectCoverageFrom: ['**/*.(t|j)s'],
-    coverageDirectory: '../coverage',
+    collectCoverage: true,
+    collectCoverageFrom: [
+      'lib/**/*.ts',
+      '!lib/index.ts',
+      '!lib/mailer.constants.ts',
+      '!lib/mailer.interface.ts',
+    ],
+    coverageDirectory: './coverage',
     testEnvironment: 'node',
   };
 };
