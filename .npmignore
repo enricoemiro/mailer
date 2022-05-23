@@ -12,3 +12,4 @@ jest.config.ts
 /.husky
 /coverage
 /lib
+/tests
