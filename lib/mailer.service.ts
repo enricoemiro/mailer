@@ -64,6 +64,7 @@ export class MailerService {
     );
 
     this.initPlugins(newTransporter, mailerTransport);
+    this.initProxy(newTransporter, mailerTransport);
 
     this.transporters.set(mailerTransport.name, {
       transporter: newTransporter,
@@ -83,6 +84,18 @@ export class MailerService {
 
     if (stream) {
       transporter.use(MailerPluginStep.STREAM, stream);
+    }
+  }
+
+  private initProxy(
+    transporter: Transporter,
+    mailerTransport: MailerTransport,
+  ): void {
+    const key = mailerTransport?.proxy?.key;
+    const value = mailerTransport?.proxy?.value;
+
+    if (key && value) {
+      transporter.set(key, value);
     }
   }
 
