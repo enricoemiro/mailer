@@ -78,11 +78,11 @@ export class MailerService {
     const stream = mailerTransport?.plugins?.stream;
 
     if (compile) {
-      transporter.use(MailerPluginStep.COMPILE, compile as Mail.PluginFunction);
+      transporter.use(MailerPluginStep.COMPILE, compile);
     }
 
     if (stream) {
-      transporter.use(MailerPluginStep.STREAM, stream as Mail.PluginFunction);
+      transporter.use(MailerPluginStep.STREAM, stream);
     }
   }
 
