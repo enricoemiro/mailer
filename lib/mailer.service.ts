@@ -5,6 +5,7 @@ import Mail from 'nodemailer/lib/mailer';
 import { MAILER_OPTIONS } from './mailer.constants';
 import {
   MailerModuleOptions,
+  MailerPluginStep,
   MailerTransport,
   MailerTransporter,
 } from './mailer.interface';
@@ -62,9 +63,27 @@ export class MailerService {
       mailerTransport.defaults,
     );
 
+    this.initPlugins(newTransporter, mailerTransport);
+
     this.transporters.set(mailerTransport.name, {
       transporter: newTransporter,
     });
+  }
+
+  private initPlugins(
+    transporter: Transporter,
+    mailerTransport: MailerTransport,
+  ): void {
+    const compile = mailerTransport?.plugins?.compile;
+    const stream = mailerTransport?.plugins?.stream;
+
+    if (compile) {
+      transporter.use(MailerPluginStep.COMPILE, compile);
+    }
+
+    if (stream) {
+      transporter.use(MailerPluginStep.STREAM, stream);
+    }
   }
 
   private initTransporters(mailerTransports: MailerTransport[]) {

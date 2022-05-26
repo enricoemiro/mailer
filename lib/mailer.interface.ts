@@ -9,7 +9,8 @@ import {
   FactoryProvider,
   ModuleMetadata,
 } from '@nestjs/common';
-import { Transporter } from 'nodemailer';
+import { Transport, TransportOptions, Transporter } from 'nodemailer';
+import Mail from 'nodemailer/lib/mailer';
 
 export type MailerTransportType =
   | JSONTransport
@@ -17,6 +18,7 @@ export type MailerTransportType =
   | SESTransport
   | SMTPTransport
   | StreamTransport
+  | Transport
   | string;
 
 export type MailerTransportOptions =
@@ -24,7 +26,32 @@ export type MailerTransportOptions =
   | SendmailTransport.Options
   | SESTransport.Options
   | SMTPTransport.Options
-  | StreamTransport.Options;
+  | StreamTransport.Options
+  | TransportOptions;
+
+/**
+ * Stage in which the plugin should be hooked.
+ */
+export enum MailerPluginStep {
+  /**
+   * Step where the email data is set but nothing has been done with it yet.
+   * At this step you can modify mail options, for example modify html content,
+   * add new headers etc.
+   */
+  COMPILE = 'compile',
+
+  /**
+   * Step where message tree has been compiled and is ready to be streamed.
+   * At this step you can modify the generated MIME tree or add a transform
+   * stream that the generated raw email will be piped through before passed
+   * to the transport object.
+   */
+  STREAM = 'stream',
+}
+
+export type MailerPluginOptions = {
+  [step in MailerPluginStep]?: Mail.PluginFunction;
+};
 
 export interface MailerTransport {
   /**
@@ -41,6 +68,11 @@ export interface MailerTransport {
    * Object that defines values for mail options.
    */
   defaults?: MailerTransportOptions;
+
+  /**
+   * Plugins to be associated with the transporter.
+   */
+  plugins?: MailerPluginOptions;
 }
 
 export interface MailerTransporter {
