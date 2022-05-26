@@ -13,6 +13,7 @@ import {
 import { MailerService } from './mailer.service';
 
 import MailMessage = require('nodemailer/lib/mailer/mail-message');
+import Mail = require('nodemailer/lib/mailer');
 
 const SMTP_CONNECTION = 'smtps://user@domain.com:pass@smtp.domain.com';
 
@@ -190,6 +191,76 @@ describe('MailerService', () => {
     expect(service.getTransporter('smtp').transporter).toBeInstanceOf(
       StreamTransport,
     );
+  });
+
+  it('should accept a custom transport options', async () => {
+    const service = await createMailerService({
+      transports: [
+        {
+          name: 'smtp',
+          transport: {
+            name: 'custom-smtp',
+            version: '0.0.1',
+            send: function (mail: any, callback: any): void {
+              const input = mail.message.createReadStream();
+              const envelope = mail.message.getEnvelope();
+              const messageId = mail.message.messageId();
+              input.pipe(process.stdout);
+              input.on('end', function () {
+                callback(null, {
+                  envelope,
+                  messageId,
+                });
+              });
+            },
+          },
+        },
+      ],
+    });
+
+    expect(service).toBeDefined();
+
+    const transporter = service.getTransporter('smtp').transporter;
+    expect(transporter).toHaveProperty('name');
+    expect(transporter).toHaveProperty('version');
+    expect(transporter).toHaveProperty('send');
+  });
+
+  it('should set compile and stream', async () => {
+    const spy = jest.spyOn(Mail.prototype, 'use');
+    const service = await createMailerService({
+      transports: [
+        {
+          name: 'smtp-1',
+          transport: SMTP_CONNECTION,
+          plugins: {
+            compile: () => 'compile',
+            stream: () => 'stream',
+          },
+        },
+        {
+          name: 'smtp-2',
+          transport: SMTP_CONNECTION,
+          plugins: {
+            compile: () => 'compile',
+          },
+        },
+        {
+          name: 'smtp-3',
+          transport: SMTP_CONNECTION,
+          plugins: {
+            stream: () => 'stream',
+          },
+        },
+        {
+          name: 'smtp-4',
+          transport: SMTP_CONNECTION,
+        },
+      ],
+    });
+
+    expect(service).toBeDefined();
+    expect(spy).toHaveBeenCalledTimes(4);
   });
 
   it('should send email', async () => {
