@@ -22,7 +22,7 @@ This is a simple [NestJS](https://nestjs.com/) mailer module based on [NodeMaile
   </a>
 
   <a href="https://www.npmjs.com/package/@enricoemiro/mailer">
-    <img src="https://github.com/enricoemiro/mailer/actions/workflows/test.yml/badge.svg" alt="Test CI" />
+    <img src="https://github.com/enricoemiro/mailer/actions/workflows/test.yml/badge.svg?branch=main" alt="Test CI" />
   </a>
 </p>
 
