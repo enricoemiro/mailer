@@ -50,7 +50,7 @@ export enum MailerPluginStep {
 }
 
 export type MailerPluginOptions = {
-  [step in MailerPluginStep]: Mail.PluginFunction;
+  [step in MailerPluginStep]?: Mail.PluginFunction;
 };
 
 export interface MailerTransport {
