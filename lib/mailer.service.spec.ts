@@ -263,6 +263,25 @@ describe('MailerService', () => {
     expect(spy).toHaveBeenCalledTimes(4);
   });
 
+  it('should set proxy', async () => {
+    const spy = jest.spyOn(Mail.prototype, 'set');
+    const service = await createMailerService({
+      transports: [
+        {
+          name: 'smtp-1',
+          transport: SMTP_CONNECTION,
+          proxy: {
+            key: 'proxy_handler_custom',
+            value: () => 'custom',
+          },
+        },
+      ],
+    });
+
+    expect(service).toBeDefined();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
   it('should send email', async () => {
     let lastMail: MailMessage;
     const send = spyOnSmtpSend((mail: MailMessage) => {
