@@ -9,8 +9,10 @@ import {
   FactoryProvider,
   ModuleMetadata,
 } from '@nestjs/common';
+import { Socket } from 'net';
 import { Transport, TransportOptions, Transporter } from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
+import { Url } from 'url';
 
 export type MailerTransportType =
   | JSONTransport
@@ -53,6 +55,32 @@ export type MailerPluginOptions = {
   [step in MailerPluginStep]?: Mail.PluginFunction;
 };
 
+export enum MailerProxyKey {
+  PROXY_HANDLER_HTTP = 'proxy_handler_http',
+  PROXY_HANDLER_HTTPS = 'proxy_handler_https',
+  PROXY_HANDLER_SOCKS = 'proxy_handler_socks',
+  PROXY_HANDLER_SOCKS5 = 'proxy_handler_socks5',
+  PROXY_HANDLER_SOCKS4 = 'proxy_handler_socks4',
+  PROXY_HANDLER_SOCKS4A = 'proxy_handler_socks4a',
+  PROXY_SOCKS_MODULE = 'proxy_socks_module',
+}
+
+export interface MailerProxyOptions {
+  key: MailerProxyKey | string;
+  value:
+    | ((
+        proxy: Url,
+        options: TransportOptions,
+        callback: (
+          err: Error | null,
+          socketOptions?: {
+            connection: Socket;
+          },
+        ) => void,
+      ) => void)
+    | any;
+}
+
 export interface MailerTransport {
   /**
    * Name to be assigned to the transporter (must be unique).
@@ -73,6 +101,11 @@ export interface MailerTransport {
    * Plugins to be associated with the transporter.
    */
   plugins?: MailerPluginOptions;
+
+  /**
+   * Proxy to be associated with the transporter.
+   */
+  proxy?: MailerProxyOptions;
 }
 
 export interface MailerTransporter {
