@@ -52,6 +52,13 @@ export class AppModule {
     };
   }
 
+  public static usingForRootAsyncWithoutOptions(): DynamicModule {
+    return {
+      module: AppModule,
+      imports: [MailerModule.forRootAsync({})],
+    };
+  }
+
   public static usingForRootAsyncWithUseClass(): DynamicModule {
     return {
       module: AppModule,

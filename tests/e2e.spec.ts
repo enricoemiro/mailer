@@ -24,6 +24,10 @@ describe('E2E tests', () => {
     ).toBeDefined();
   });
 
+  it('should throw error if forRootAsync() is called without useExisting, useFactory and useClass', async () => {
+    expect(() => AppModule.usingForRootAsyncWithoutOptions()).toThrow(Error);
+  });
+
   it('should be defined using forRootAsync()', async () => {
     const app = await createMockApplication(AppModule.usingForRootAsync());
 
