@@ -75,8 +75,7 @@ export class MailerService {
     transporter: Transporter,
     mailerTransport: MailerTransport,
   ): void {
-    const compile = mailerTransport?.plugins?.compile;
-    const stream = mailerTransport?.plugins?.stream;
+    const { compile, stream } = mailerTransport.plugins || {};
 
     if (compile) {
       transporter.use(MailerPluginStep.COMPILE, compile);
@@ -91,8 +90,7 @@ export class MailerService {
     transporter: Transporter,
     mailerTransport: MailerTransport,
   ): void {
-    const key = mailerTransport?.proxy?.key;
-    const value = mailerTransport?.proxy?.value;
+    const { key, value } = mailerTransport.proxy || {};
 
     if (key && value) {
       transporter.set(key, value);

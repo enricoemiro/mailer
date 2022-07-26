@@ -48,20 +48,24 @@ export class MailerModule {
   }
 
   private static createAsyncProviders(options: MailerModuleAsyncOptions) {
-    if (!options.useFactory && !options.useExisting && !options.useClass) {
-      throw new Error(
-        'Invalid forRootAsync configuration. Must provide useFactory, useExisting or useClass.',
-      );
+    if (options.useFactory) {
+      return [this.createAsyncFactoryProvider(options)];
     }
 
-    if (options.useFactory) return [this.createAsyncFactoryProvider(options)];
-    if (options.useExisting) return [this.createAsyncCustomProvider(options)];
+    if (options.useExisting) {
+      return [this.createAsyncCustomProvider(options)];
+    }
+
     if (options.useClass) {
       return [
         this.createAsyncCustomProvider(options),
         this.createAsyncClassProvider(options),
       ];
     }
+
+    throw new Error(
+      'Invalid forRootAsync configuration. Must provide useFactory, useExisting or useClass.',
+    );
   }
 
   private static createAsyncFactoryProvider(
