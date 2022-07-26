@@ -1,9 +1,11 @@
-import * as JSONTransport from 'nodemailer/lib/json-transport';
-import * as SendmailTransport from 'nodemailer/lib/sendmail-transport';
-import * as SESTransport from 'nodemailer/lib/ses-transport';
-import * as SMTPTransport from 'nodemailer/lib/smtp-transport';
-import * as StreamTransport from 'nodemailer/lib/stream-transport';
 import { Test, TestingModule } from '@nestjs/testing';
+import JSONTransport from 'nodemailer/lib/json-transport';
+import Mail from 'nodemailer/lib/mailer';
+import MailMessage from 'nodemailer/lib/mailer/mail-message';
+import SendmailTransport from 'nodemailer/lib/sendmail-transport';
+import SESTransport from 'nodemailer/lib/ses-transport';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import StreamTransport from 'nodemailer/lib/stream-transport';
 
 import { MAILER_OPTIONS } from './mailer.constants';
 import {
@@ -11,9 +13,6 @@ import {
   MailerModuleOptions,
 } from './mailer.interface';
 import { MailerService } from './mailer.service';
-
-import MailMessage = require('nodemailer/lib/mailer/mail-message');
-import Mail = require('nodemailer/lib/mailer');
 
 const SMTP_CONNECTION = 'smtps://user@domain.com:pass@smtp.domain.com';
 
